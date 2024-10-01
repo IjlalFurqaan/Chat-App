@@ -1,9 +1,14 @@
-const express = require("express");
-
+import express from "express";
+import dotenv from "dotenv";
 const app = express();
 
-app.get("/", (req, res) => {
-  res.send("Hello World!"); 
-});
+dotenv.config();
 
-app.listen(5000, () => console.log("This is an express app"));
+const PORT = process.env.PORT || 5000;
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+// app.use("/api/auth", authRoutes);
+
+app.listen(PORT, () => console.log(`This is running on Port ${PORT}`));
