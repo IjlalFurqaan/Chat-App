@@ -82,7 +82,6 @@ const SignUp = () => {
 						/>
 					</div>
 
-					{/* Gender Checkbox */}
           <div className='flex'>
             <div className='form-control'>
               <label className={`label gap-2 cursor-pointer ${inputs.gender === "male" ? "selected" : ""} `}>

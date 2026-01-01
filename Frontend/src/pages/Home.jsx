@@ -1,9 +1,17 @@
 import MessageContainer from "../components/messages/MessageContainer";
 import Sidebar from "../components/sidebar/Sidebar";
+import { useAuthContext } from "../context/AuthContext";
+import GuestChat from "../components/GuestChat";
 
 const Home = () => {
+	const { authUser } = useAuthContext();
+
+	if (!authUser) {
+		return <GuestChat />;
+	}
+
 	return (
-		<div className='flex sm:h-[450px] md:h-[550px] rounded-lg overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0'>
+		<div className='flex sm:h-[450px] md:h-[550px] rounded-lg overflow-hidden bg-gray-400 bg-clip-padding backdrop-filter backdrop-blur-lg bg-opacity-0 shadow-xl border border-white/20'>
 			<Sidebar />
 			<MessageContainer />
 		</div>
