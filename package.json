@@ -4,8 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon backend/server.js",
-    "start": "node backend/server.js",
+    "server": "nodemon Backend/server.js",
+    "start": "node Backend/server.js",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "client": "npm run dev --prefix Frontend",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "type": "module",
@@ -23,6 +25,7 @@
     "socket.io": "^4.8.0"
   },
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "nodemon": "^3.1.7"
   }
 }
