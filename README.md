@@ -16,26 +16,51 @@ Koto is built on the **MERN** stack (MongoDB, Express, React, Node.js), but it d
 
 ### System Overview
 
-```mermaid
-graph TD
-    Client[React Client (Vite)]
-    LB[Load Balancer / Nginx]
-    API[Express REST API]
-    Socket[Socket.io Server]
-    DB[(MongoDB Atlas)]
-    TF[TensorFlow.js (Client-Side)]
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                        CLIENT LAYER                              │
+│  ┌────────────────────────────────────────────────────────────┐ │
+│  │  React 18 + Vite (Frontend)                                │ │
+│  │  • Zustand (State Management)                              │ │
+│  │  • Tailwind CSS + DaisyUI (Styling)                        │ │
+│  │  • TensorFlow.js (Client-Side Sentiment Analysis)          │ │
+│  └────────────────────────────────────────────────────────────┘ │
+│           │                                      ▲               │
+│           │ HTTP/REST                            │ WebSocket     │
+│           ▼                                      │               │
+└───────────────────────────────────────────────────────────────────┘
+            │                                      │
+            │                                      │
+┌───────────▼──────────────────────────────────────┼───────────────┐
+│                     SERVER LAYER                 │               │
+│  ┌─────────────────────────────┐    ┌───────────▼───────────┐   │
+│  │  Express REST API           │    │  Socket.io Server     │   │
+│  │  • JWT Authentication       │    │  • Real-Time Events   │   │
+│  │  • RESTful Endpoints        │    │  • Room Management    │   │
+│  │  • Middleware Stack         │    │  • Message Broadcasting│  │
+│  └─────────────┬───────────────┘    └───────────────────────┘   │
+│                │                                                 │
+│                │ Mongoose ODM                                    │
+│                ▼                                                 │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │           MongoDB Atlas (Database)                      │    │
+│  │  • Users Collection                                     │    │
+│  │  • Messages Collection                                  │    │
+│  │  • Conversations Collection                             │    │
+│  └─────────────────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────────────────┘
 
-    Client -->|HTTP/REST| LB
-    LB --> API
-    API -->|Mongoose| DB
+                    Data Flow Architecture
     
-    Client <-->|WebSockets| Socket
-    Socket <-->|Events| Client
-    
-    subgraph "Frontend Layer"
-    Client -- Input Stream --> TF
-    TF -- Sentiment Vector --> Client
-    end
+User Types Message → Client Sentiment Analysis → Optimistic UI Update
+                                    ↓
+                        Socket.io Emit to Server
+                                    ↓
+                    Server Validates & Saves to MongoDB
+                                    ↓
+                Socket.io Broadcast to Room Participants
+                                    ↓
+                    Recipients Receive Real-Time Update
 ```
 
 ### Core Technical Pillars
@@ -123,12 +148,12 @@ A bespoke design system moved away from the "Silicon Valley Blue" standard.
 
 ---
 
-## 🎥 Demo & Portfolio
+## 🎯 Project Vision
 
-Watch the 45-second vertical teaser that got me the interview: [Live Demo](/teaser)
+*"I built Koto to prove that chat apps don't have to be noisy. They can be calm, intelligent, and beautiful."*
 
-> *"I built Koto to prove that chat apps don't have to be noisy. They can be calm, intelligent, and beautiful."*
+Koto represents a commitment to creating digital spaces that respect cognitive diversity and prioritize mental clarity over engagement metrics.
 
 ---
 
-**© 2026 Koto Messaging.** *Built with code, coffee, and focus in Kashmir.*
+**© 2026 Koto Messaging.** *Built with code, coffee, and focus.*
